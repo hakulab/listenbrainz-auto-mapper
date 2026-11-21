@@ -2,13 +2,13 @@
 
 [![CI](https://github.com/hakulab/listenbrainz-auto-mapper/actions/workflows/ci.yml/badge.svg)](https://github.com/hakulab/listenbrainz-auto-mapper/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/hakulab/listenbrainz-auto-mapper/graph/badge.svg)](https://codecov.io/gh/hakulab/listenbrainz-auto-mapper)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/hakulab/listenbrainz-auto-mapper/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Map unlinked [ListenBrainz](https://listenbrainz.org/) listens to [MusicBrainz](https://musicbrainz.org/) recordings and clean up listens that remain unmatched after research and final review.
 
 ## How it works
 
-The shared [map-listens skill](https://github.com/hakulab/listenbrainz-auto-mapper/blob/main/.agents/skills/map-listens/SKILL.md) runs in Codex or Claude Code. Python handles API operations and records, while the coordinating assistant researches recording identity and reviews the decisions.
+The shared [map-listens skill](.agents/skills/map-listens/SKILL.md) runs in Codex or Claude Code. Python handles API operations and records, while the coordinating assistant researches recording identity and reviews the decisions.
 
 1. Collect the requested number of recent unlinked listens, preserving source metadata.
 2. Group repeated recording MSIDs and gather candidates from LB Labs and MusicBrainz.
@@ -50,8 +50,8 @@ For direct CLI use, the skill lists each command with the inputs it expects. The
 
 ## Development
 
-See [AGENTS.md](https://github.com/hakulab/listenbrainz-auto-mapper/blob/main/AGENTS.md) for contributor instructions and verification commands.
+See [AGENTS.md](AGENTS.md) for contributor instructions and verification commands.
 
 ## License
 
-Copyright (c) 2026 [Hakula](https://hakula.xyz). Licensed under the [MIT License](https://github.com/hakulab/listenbrainz-auto-mapper/blob/main/LICENSE).
+Copyright (c) 2026 [Hakula](https://hakula.xyz). Licensed under the [MIT License](LICENSE).
