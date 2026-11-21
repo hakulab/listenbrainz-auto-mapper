@@ -125,13 +125,12 @@ def test_bulk_lookup_deduplicates_raw_pairs_and_reuses_resumed_candidates(
 
 
 def test_outage_is_error_with_no_false_empty_result() -> None:
-    with (
-        patch.object(lb_search, 'search_recording'),
-        patch.object(
-            search_batch, 'search_recording', side_effect=httpx.ConnectError('offline')
-        ),
+    row = search_batch._entry({'artist': 'A', 'track': 'B'}, 'labs')
+
+    with patch.object(
+        search_batch, 'search_recording', side_effect=httpx.ConnectError('offline')
     ):
-        row = search_batch._search_one({'artist': 'A', 'track': 'B'}, 'labs')
+        search_batch._search_one(row)
 
     assert row['status'] == 'error'
     assert 'ConnectError' in row['error']
@@ -139,8 +138,10 @@ def test_outage_is_error_with_no_false_empty_result() -> None:
 
 
 def test_successful_empty_search_is_distinct() -> None:
+    row = search_batch._entry({'artist': 'A', 'track': 'B'}, 'labs')
+
     with patch.object(search_batch, 'search_recording', return_value=[]):
-        row = search_batch._search_one({'artist': 'A', 'track': 'B'}, 'labs')
+        search_batch._search_one(row)
 
     assert row['status'] == 'ok'
     assert row['results'] == []
