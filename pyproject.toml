@@ -2,8 +2,14 @@
 name = "lb-mapper"
 version = "0.1.0"
 description = "Automatically map unlinked ListenBrainz listens to MusicBrainz recordings"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.12"
 dependencies = ["httpx>=0.28.1", "python-dotenv>=1.2.4"]
+
+[project.urls]
+Repository = "https://github.com/hakulab/listenbrainz-auto-mapper"
+Issues = "https://github.com/hakulab/listenbrainz-auto-mapper/issues"
 
 [build-system]
 requires = ["hatchling>=1.33.0"]

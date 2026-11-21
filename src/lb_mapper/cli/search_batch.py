@@ -35,9 +35,6 @@ def _query(item: dict[str, Any], source: str) -> str:
 
 
 def _entry(item: dict[str, Any], source: str) -> dict[str, Any]:
-    if not isinstance(item, dict):
-        raise ValueError('Search input must be an object')
-
     if 'recording_msid' in item:
         uuid_string(item['recording_msid'])
 
@@ -53,17 +50,16 @@ def _entry(item: dict[str, Any], source: str) -> dict[str, Any]:
     return {**item, 'source': source, 'operation': operation, 'query': query}
 
 
-def _search_one(item: dict[str, Any], source: str) -> dict[str, Any]:
-    entry = _entry(item, source)
+def _search_one(entry: dict[str, Any]) -> None:
     query = entry['query']
 
     try:
-        if source == 'labs':
-            results = search_recording(item['artist'], item['track'])
-        elif item.get('recording_mbid'):
+        if entry['source'] == 'labs':
+            results = search_recording(entry['artist'], entry['track'])
+        elif entry['operation'] == 'lookup':
             results = [mb_search.lookup_recording(query)]
         else:
-            page = mb_search.search_recordings(query, item.get('offset', 0))
+            page = mb_search.search_recordings(query, entry.get('offset', 0))
             results = page['recordings']
             entry.update(result_count=page['count'], result_offset=page['offset'])
 
@@ -75,8 +71,6 @@ def _search_one(item: dict[str, Any], source: str) -> dict[str, Any]:
     except (httpx.HTTPError, ValueError, KeyError) as exc:
         entry.update(status='error', error=f'{type(exc).__name__}: {exc}')
 
-    return entry
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -87,8 +81,7 @@ def main() -> None:
     validate_paths(parser, args.input, args.output)
 
     try:
-        items = read_items(args.input)
-        entries = [_entry(item, args.source) for item in items]
+        entries = [_entry(item, args.source) for item in read_items(args.input)]
     except (KeyError, TypeError, ValueError) as exc:
         parser.error(f'Invalid search input: {exc}')
 
@@ -105,12 +98,12 @@ def main() -> None:
             if outcome is not None:
                 entry.update(outcome)
             else:
-                entry = _search_one(entry, args.source)
+                _search_one(entry)
 
             journal.record(entry, stream)
             failed |= entry['status'] == 'error'
             print(
-                f'[{i}/{len(items)}] {entry.get("artist", "")} / '
+                f'[{i}/{len(entries)}] {entry.get("artist", "")} / '
                 f'{entry.get("track", entry["query"])}: {entry["status"]}, '
                 f'{len(entry.get("results", []))} candidates',
                 file=sys.stderr,

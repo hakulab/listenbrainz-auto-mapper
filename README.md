@@ -1,7 +1,8 @@
 # lb-mapper
 
-[![CI](https://github.com/hakula139/listenbrainz-auto-mapper/actions/workflows/ci.yml/badge.svg)](https://github.com/hakula139/listenbrainz-auto-mapper/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/hakula139/listenbrainz-auto-mapper/graph/badge.svg)](https://codecov.io/gh/hakula139/listenbrainz-auto-mapper)
+[![CI](https://github.com/hakulab/listenbrainz-auto-mapper/actions/workflows/ci.yml/badge.svg)](https://github.com/hakulab/listenbrainz-auto-mapper/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/hakulab/listenbrainz-auto-mapper/graph/badge.svg)](https://codecov.io/gh/hakulab/listenbrainz-auto-mapper)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Map unlinked [ListenBrainz](https://listenbrainz.org/) listens to [MusicBrainz](https://musicbrainz.org/) recordings and clean up listens that remain unmatched after research and final review.
 
@@ -26,7 +27,7 @@ Large history scans use the official ListenBrainz export API. Snapshots, candida
 ## Setup
 
 ```bash
-git clone https://github.com/hakula139/listenbrainz-auto-mapper.git
+git clone https://github.com/hakulab/listenbrainz-auto-mapper.git
 cd listenbrainz-auto-mapper
 nix develop
 uv sync --locked
@@ -46,3 +47,11 @@ $map-listens collect and process 5000 unlinked listens
 The count is the number of listen occurrences, so repeated tracks can yield fewer distinct mapping decisions. The assistant handles final review. State whether it may submit mappings and delete unmatched listens, or whether you want a proposal first.
 
 For direct CLI use, the skill lists each command with the inputs it expects. The execution helper validates a plan by default and requires `--apply` to mutate the account.
+
+## Development
+
+See [AGENTS.md](AGENTS.md) for contributor instructions and verification commands.
+
+## License
+
+Copyright (c) 2026 [Hakula](https://hakula.xyz). Licensed under the [MIT License](LICENSE).

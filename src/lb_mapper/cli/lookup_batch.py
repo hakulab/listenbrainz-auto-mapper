@@ -74,8 +74,7 @@ def main() -> None:
                     error = f'{type(exc).__name__}: {exc}'
 
             for pair in batch:
-                for item in queries[pair]:
-                    row = _entry(item)
+                for row in queries[pair]:
                     if pair in cached:
                         row.update(status='ok', results=cached[pair])
                     else:
