@@ -6,6 +6,7 @@ devkit
 direnv
 dotenv
 hakula
+hakulab
 hardlinked
 httpx
 isort
