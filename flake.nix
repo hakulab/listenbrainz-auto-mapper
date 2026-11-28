@@ -38,6 +38,7 @@
         preCommit = dk.preCommit {
           src = ./.;
           hooks = {
+            markdownlint-cli2.settings.configPath = ".markdownlint-cli2.jsonc";
             mypy.enable = true;
             prettier.enable = true;
             ruff.enable = true;
